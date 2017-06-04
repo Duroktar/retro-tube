@@ -20,6 +20,7 @@
 
 import QtQuick 2.2
 import QtGraphicalEffects 1.0
+import QtMultimedia 5.8
 
 import "utils.js" as Utils
 
@@ -90,6 +91,7 @@ ShaderEffect {
         fillMode: Image.Tile
         visible: false
     }
+
     ShaderEffectSource{
         id: noiseShaderSource
         sourceItem: noiseTexture

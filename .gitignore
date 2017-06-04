@@ -41,7 +41,7 @@ Makefile*
 
 # Excludes compiled files
 imports
-cool-retro-term
+retro-tube
 
 # Mac OSX
 

@@ -20,6 +20,7 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 1.0
+import QtAV 1.6
 
 import "utils.js" as Utils
 
@@ -42,7 +43,7 @@ QtObject{
     property bool showMenubar: true
 
     property real windowOpacity: 1.0
-    property real ambientLight: 0.2
+    property real ambientLight: 0.16
     property real contrast: 0.85
     property real brightness: 0.5
 
@@ -54,8 +55,13 @@ QtObject{
 
     onWindowScalingChanged: handleFontChanged();
 
-    // PROFILE SETTINGS ///////////////////////////////////////////////////////
+    // MEDIA SETTINGS /////////////////////////////////////////////////////////
 
+    property string currentMedia: ""
+    property int fillMode: 2     // PreserveAspectCrop
+    property int audioTrack: 0
+
+    // PROFILE SETTINGS ///////////////////////////////////////////////////////
     property bool useCustomCommand: false
     property string customCommand: ""
 
@@ -65,11 +71,11 @@ QtObject{
     property color fontColor: Utils.mix(Utils.strToColor(saturatedColor), Utils.strToColor(_backgroundColor), 0.7 + (contrast * 0.3))
     property color backgroundColor: Utils.mix(Utils.strToColor(_backgroundColor), Utils.strToColor(saturatedColor), 0.7 + (contrast * 0.3))
 
-    property real staticNoise: 0.1
-    property real screenCurvature: 0.1
-    property real glowingLine: 0.2
-    property real burnIn: 0.40
-    property real bloom: 0.65
+    property real staticNoise: 0.2
+    property real screenCurvature: 0.15
+    property real glowingLine: 0.13
+    property real burnIn: 0.25
+    property real bloom: 0.4
 
     property real bloomQuality: 0.5
     property real burnInQuality: 0.5
@@ -80,7 +86,7 @@ QtObject{
     property real jitter: 0.18
 
     property real horizontalSync: 0.08
-    property real flickering: 0.1
+    property real flickering: 0.7
 
     property real rbgShift: 0.0
 
@@ -138,6 +144,7 @@ QtObject{
         handleFontChanged();
     }
 
+    // TODO Use this for Volume in corner of screen?
     function handleFontChanged(){
         if (!fontManager.item) return;
 
@@ -189,8 +196,8 @@ QtObject{
         return 0; // If the frame is not available default to 0.
     }
 
-    property string frameSource: "./frames/WhiteSimpleFrame.qml"
-    property string frameName: "SIMPLE_WHITE_FRAME"
+    property string frameSource: "./frames/BlackRoughFrame.qml"
+    property string frameName: "ROUGH_BLACK_FRAME"
 
     property bool _frameReflections: false
     property bool reflectionsAllowed: true

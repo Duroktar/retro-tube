@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     FileIO fileIO;
 
+// TODO more cool-retro-term stuff to change to retro-tube
 #if !defined(Q_OS_MAC)
     app.setWindowIcon(QIcon::fromTheme("cool-retro-term", QIcon(":../icons/32x32/cool-retro-term.png")));
 #else
@@ -51,18 +52,18 @@ int main(int argc, char *argv[])
         // BUG: This usage help text goes to stderr, should go to stdout.
         // BUG: First line of output is surrounded by double quotes.
         qDebug() << "Usage: " + args.at(0) + " [--default-settings] [--workdir <dir>] [--program <prog>] [-p|--profile <prof>] [--fullscreen] [-h|--help]";
-        qDebug() << "  --default-settings  Run cool-retro-term with the default settings";
-        qDebug() << "  --workdir <dir>     Change working directory to 'dir'";
-        qDebug() << "  -e <cmd>            Command to execute. This option will catch all following arguments, so use it as the last option.";
-        qDebug() << "  --fullscreen        Run cool-retro-term in fullscreen.";
-        qDebug() << "  -p|--profile <prof> Run cool-retro-term with the given profile.";
+        qDebug() << "  --default-settings  Run retro-tube with the default settings";
+        // qDebug() << "  --workdir <dir>     Change working directory to 'dir'";
+        // qDebug() << "  -e <cmd>            Command to execute. This option will catch all following arguments, so use it as the last option.";
+        qDebug() << "  --fullscreen        Run retro-tube in fullscreen.";
+        qDebug() << "  -p|--profile <prof> Run retro-tube with the given profile.";
         qDebug() << "  -h|--help           Print this help.";
         qDebug() << "  --verbose           Print additional information such as profiles and settings.";
         return 0;
     }
 
     if (args.contains("-v") || args.contains("--version")) {
-        qDebug() << "cool-retro-term 1.0";
+        qDebug() << "retro-tube 0.1.0";
 	return 0;
     }
 

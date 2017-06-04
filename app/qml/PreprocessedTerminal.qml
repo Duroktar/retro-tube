@@ -18,10 +18,21 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
 
+// TODO SOoooooooo... kterminal can get ripped out and replaced with the 
+// video player logic. The key bindings should be put either here alongside
+// the logic, or alternatively put into another file.
+
+// BUGS -
+// - Burn in effect needs to be refreshed properly. There is a 
+//   bad full screen burn leftover when video changes, for example
+// - 
+
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 
 import QMLTermWidget 1.0
+import QtAV 1.6
+
 
 import "utils.js" as Utils
 
@@ -55,6 +66,8 @@ Item{
     property size terminalSize: kterminal.terminalSize
     property size fontMetrics: kterminal.fontMetrics
 
+    // TODO This can go, but use it for template... (see Video events below)
+    // 
     // Manage copy and paste
     Connections{
         target: copyAction
@@ -65,11 +78,22 @@ Item{
         onTriggered: kterminal.pasteClipboard()
     }
 
+    // Video events
+    // Connections{
+    //     target: copyAction
+    //     onTriggered: kterminal.copyClipboard();
+    // }
+    // Connections{
+    //     target: pasteAction
+    //     onTriggered: kterminal.pasteClipboard()
+    // }
+
     //When settings are updated sources need to be redrawn.
     Connections{
         target: appSettings
         onFontScalingChanged: terminalContainer.updateSources();
         onFontWidthChanged: terminalContainer.updateSources();
+        onCurrentMediaChanged: terminalContainer.updateSources();
     }
     Connections{
         target: terminalContainer
@@ -99,36 +123,36 @@ Item{
             }
         }
 
-        QMLTermScrollbar {
-            id: kterminalScrollbar
-            terminal: kterminal
-            anchors.margins: width * 0.5
-            width: terminal.fontMetrics.width * 0.75
-            Rectangle {
-                anchors.fill: parent
-                anchors.topMargin: 1
-                anchors.bottomMargin: 1
-                color: "white"
-                radius: width * 0.25
-                opacity: 0.7
-            }
+        VideoOutput {
+            id: videoOut
+            opengl: true
+            fillMode: appSettings.fillMode
+            source: mediaPlayer
+            anchors.fill: parent
+            orientation: 0
+
+        }
+
+        function handleMediaChange() {
+            mediaPlayer.stop();
+            mediaPlayer.play();
         }
 
         FontLoader{ id: fontLoader }
 
-        function handleFontChange(fontSource, pixelSize, lineSpacing, screenScaling, fontWidth){
-            fontLoader.source = fontSource;
+//        function handleFontChange(fontSource, pixelSize, lineSpacing, screenScaling, fontWidth){
+//            fontLoader.source = fontSource;
 
-            kterminal.antialiasText = !appSettings.lowResolutionFont;
-            font.pixelSize = pixelSize;
-            font.family = fontLoader.name;
+//            kterminal.antialiasText = !appSettings.lowResolutionFont;
+//            font.pixelSize = pixelSize;
+//            font.family = fontLoader.name;
 
-            terminalContainer.fontWidth = fontWidth;
-            terminalContainer.screenScaling = screenScaling;
-            scaleTexture = Math.max(1.0, Math.floor(screenScaling * appSettings.windowScaling));
+//            terminalContainer.fontWidth = fontWidth;
+//            terminalContainer.screenScaling = screenScaling;
+//            scaleTexture = Math.max(1.0, Math.floor(screenScaling * appSettings.windowScaling));
 
-            kterminal.lineSpacing = lineSpacing;
-        }
+//            kterminal.lineSpacing = lineSpacing;
+//        }
         function startSession() {
             appSettings.initializedSettings.disconnect(startSession);
 
@@ -148,12 +172,13 @@ Item{
             if (workdir)
                 ksession.initialWorkingDirectory = workdir;
 
-            ksession.startShellProgram();
+//            ksession.startShellProgram();
             forceActiveFocus();
         }
         Component.onCompleted: {
             appSettings.terminalFontChanged.connect(handleFontChange);
-            appSettings.initializedSettings.connect(startSession);
+            appSettings.currentMediaChanged.connect(handleMediaChange);
+//            appSettings.initializedSettings.connect(startSession);
         }
     }
     Component {
@@ -290,10 +315,10 @@ Item{
                 onRasterizationChanged: _blurredSourceEffect.restartBlurSource();
                 onBurnInQualityChanged: _blurredSourceEffect.restartBlurSource();
             }
-            Connections {
-                target: kterminalScrollbar
-                onOpacityChanged: _blurredSourceEffect.restartBlurSource();
-            }
+//            Connections {
+//                target: kterminalScrollbar
+//                onOpacityChanged: _blurredSourceEffect.restartBlurSource();
+//            }
         }
     }
 
