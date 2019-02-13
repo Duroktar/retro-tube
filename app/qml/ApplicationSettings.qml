@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Copyright (c) 2013 "Filippo Scognamiglio"
+* Copyright (c) 2019 "Scott Doucet"
 * https://github.com/Duroktar/retro-tube
 *
 * This file is part of retro-tube.
@@ -20,6 +20,7 @@
 
 import QtQuick 2.2
 import QtQuick.Controls 1.0
+import QtAV 1.6
 
 import "utils.js" as Utils
 
@@ -61,7 +62,11 @@ QtObject{
 
     onWindowScalingChanged: handleFontChanged();
 
-    // PROFILE SETTINGS ///////////////////////////////////////////////////////
+    // MEDIA SETTINGS /////////////////////////////////////////////////////////
+
+    property string currentMedia: ""
+    property int fillMode: 2     // PreserveAspectCrop
+    property int audioTrack: 0
 
     property real windowOpacity: 1.0
     property real ambientLight: 0.2
@@ -77,11 +82,11 @@ QtObject{
     property color fontColor: Utils.mix(Utils.strToColor(saturatedColor), Utils.strToColor(_backgroundColor), 0.7 + (contrast * 0.3))
     property color backgroundColor: Utils.mix(Utils.strToColor(_backgroundColor), Utils.strToColor(saturatedColor), 0.7 + (contrast * 0.3))
 
-    property real staticNoise: 0.12
-    property real screenCurvature: 0.3
-    property real glowingLine: 0.2
+    property real staticNoise: 0.2
+    property real screenCurvature: 0.15
+    property real glowingLine: 0.13
     property real burnIn: 0.25
-    property real bloom: 0.55
+    property real bloom: 0.4
 
     property real chromaColor: 0.25
     property real saturationColor: 0.25
@@ -89,7 +94,7 @@ QtObject{
     property real jitter: 0.2
 
     property real horizontalSync: 0.08
-    property real flickering: 0.1
+    property real flickering: 0.7
 
     property real rbgShift: 0.0
 
@@ -156,6 +161,7 @@ QtObject{
         handleFontChanged();
     }
 
+    // TODO Use this for Volume in corner of screen?
     function handleFontChanged(){
         if (!fontManager.item) return;
 
@@ -182,6 +188,9 @@ QtObject{
 
         terminalFontChanged(fontFamily, pixelSize, lineSpacing, screenScaling, fontWidth);
     }
+
+    property string frameSource: "./frames/BlackRoughFrame.qml"
+    property string frameName: "ROUGH_BLACK_FRAME"
 
     property Storage storage: Storage{ }
 

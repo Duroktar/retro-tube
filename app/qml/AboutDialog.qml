@@ -17,6 +17,7 @@ Window{
         spacing: 15
         Text {
             Layout.alignment: Qt.AlignHCenter
+            // anchors.horizontalCenter: parent.horizontalCenter
             text: "retro-tube"
             font {bold: true; pointSize: 18}
         }

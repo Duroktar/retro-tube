@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Copyright (c) 2013 "Filippo Scognamiglio"
+* Copyright (c) 2017 "Scott Doucet"
 * https://github.com/Duroktar/retro-tube
 *
 * This file is part of retro-tube.
@@ -27,7 +27,7 @@ QtObject {
     property bool initialized: false
 
     function getDatabase() {
-         return LocalStorage.openDatabaseSync("coolretroterm" + dbMajorVersion, dbMinorVersion, "StorageDatabase", 100000);
+         return LocalStorage.openDatabaseSync("retrotube" + dbMajorVersion, dbMinorVersion, "StorageDatabase", 100000);
     }
 
     function initialize() {

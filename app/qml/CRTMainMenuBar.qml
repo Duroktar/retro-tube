@@ -7,7 +7,15 @@ MenuBar {
     Menu {
         title: qsTr("File")
         visible: defaultMenuBar.visible
+        MenuItem {action: openFileAction}
         MenuItem {action: quitAction}
+    }
+    Menu {
+        title: qsTr("Media")
+        visible: defaultMenuBar.visible
+        MenuItem {action: startMediaAction}
+        MenuItem {action: stopMediaAction}
+        MenuItem {action: pauseMediaAction}
     }
     Menu {
         title: qsTr("Edit")

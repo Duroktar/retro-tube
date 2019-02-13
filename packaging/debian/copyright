@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: retro-tube
 Upstream-Contact: Scott Doucet <duroktar@gmail.com>
-Source: https://github.com/Swordfish90/cool-retro-term
+Source: https://github.com/Duroktar/retro-tube
 
 Files: *
 Copyright: 2019 Scott Doucet

@@ -1,5 +1,5 @@
-QT += qml quick widgets sql
-TARGET = retro-tube 
+QT += qml quick widgets sql av avwidgets
+TARGET = retro-tube
 
 DESTDIR = $$OUT_PWD/../
 
@@ -14,7 +14,6 @@ SOURCES = main.cpp \
 macx:ICON = icons/crt.icns
 
 RESOURCES += qml/resources.qrc
-
 #########################################
 ##              INTALLS
 #########################################
@@ -23,7 +22,7 @@ target.path += /usr/bin/
 
 INSTALLS += target
 
-# Install icons
+# Install icons  TODO make retro-tube icons
 unix {
     icon32.files = icons/32x32/cool-retro-term.png
     icon32.path = /usr/share/icons/hicolor/32x32/apps

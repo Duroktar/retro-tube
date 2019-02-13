@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Copyright (c) 2013 "Filippo Scognamiglio"
+* Copyright (c) 2017 "Scott Doucet"
 * https://github.com/Duroktar/retro-tube
 *
 * This file is part of retro-tube.

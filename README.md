@@ -3,16 +3,34 @@
 ![image](https://raw.githubusercontent.com/Duroktar/retro-tube/master/app/qml/images/married.png)
 
 ## Description
-retro-tube is a terminal emulator turned video player which mimics the look and feel of the old cathode tube screens.
-It has been designed to be eye-candy, customizable, and reasonably lightweight.
 
-It uses the QML port of qtermwidget (Konsole) developed by Swordfish90: https://github.com/Swordfish90/qmltermwidget .
+### Enjoy your favorite movies and shows like it was "back in the day"!
 
-This terminal emulator works under Linux and macOS and requires Qt 5.2 or higher.
+The look and feel of old CRT style televisions brought something to the viewing experience that is somewhat lost in our modern HD era. The warm fuzz, subtle (or sometimes not so subtle) screen curvature,the soft glow and even good old scanlines, all these little things added to the experience and are all recreated in retro-tube.
+
+### Features
+
+- Qt based, written mostly with QML allowing for fast development
+- Highly customizable screen effects like: glow, burn-in, screen vibration, scanlines or pixels, etc..
+- opengl rendering for performance
+- ffmpeg backend
+- Hotkey switch audio track for multi language media files
+- Lot's of keybindings and settings
+
+### Disclaimer: retro-tube is still very much a WIP. But a lot of things are already working. If you encounter a bug or missing feature don't hesitate to report it or make a feature (or pull) request.
+
+### Requirements -
+
+
+Tested on Arch Linux. RetroTube requires [Qt](https://www.qt.io/) 5.2 or higher, and [QtAv](https://github.com/wang-bin/QtAV) 1.11 with a video backend of [ffmpeg](https://ffmpeg.org/)
+
+## Attribution
+
+RetroTube is a fork of [cool-retro-term](https://github.com/Swordfish90/cool-retro-term) which mimics the look and feel of the old cathode tube screens. _retro-tube would not be possible without it and the hard work of all it's developers._ (Literally, they did _all_ the hard work). Thank you so much.
 
 ## Install
 
-## Build instructions (Linux)
+# Build instructions (Linux)
 
 Build retro-tube yourself, you know, the retro way.
 
@@ -64,30 +82,11 @@ or:
 
 **Arch Linux**
 
-    sudo pacman -S qt5-base qt5-declarative qt5-quickcontrols qt5-graphicaleffects
+    sudo pacman -S qt5-base qt5-declarative qt5-quickcontrols qt5-graphicaleffects qtav
     
 ---
 
-**openSUSE**
-
-Add repository with latest Qt 5 (this is only needed on openSUSE 13.1, Factory already has it):
-
-    sudo zypper ar http://download.opensuse.org/repositories/KDE:/Qt5/openSUSE_13.1/ KDE:Qt5
-
-Install dependencies:
-
-    sudo zypper install libqt5-qtbase-devel libqt5-qtdeclarative-devel libqt5-qtquickcontrols libqt5-qtgraphicaleffects
-
----
-
-**Anyone else**
-
-Install Qt directly from here http://qt-project.org/downloads . Once done export them in you path (replace "_/opt/Qt5.3.1/5.3/gcc_64/bin_" with your correct folder):
-    
-    export PATH=/opt/Qt5.3.1/5.3/gcc_64/bin/:$PATH
----
-
-### Compile
+### Compile & Install
 Once you installed all dependencies (Qt is installed and in your path) you need to compile and run the application: 
 
 ```bash
@@ -137,3 +136,10 @@ mkdir retro-tube.app/Contents/PlugIns
 cp -r qmltermwidget/QMLTermWidget retro-tube.app/Contents/PlugIns
 open retro-tube.app
 ```
+
+## License
+
+- RetroTube is gpl-2.0 & 3.0 licensed
+
+Dependancies
+- cool-retro-term is gpl-2.0 & 3.0 licensed

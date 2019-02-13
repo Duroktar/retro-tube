@@ -1,5 +1,5 @@
 /*******************************************************************************
-* Copyright (c) 2013 "Filippo Scognamiglio"
+* Copyright (c) 2017 "Scott Doucet"
 * https://github.com/Duroktar/retro-tube
 *
 * This file is part of retro-tube.
@@ -22,6 +22,7 @@ import QtQuick 2.2
 import QtQuick.Window 2.1
 import QtQuick.Controls 1.1
 import QtGraphicalEffects 1.0
+import QtAV 1.6
 
 ApplicationWindow{
     id: terminalWindow
@@ -131,6 +132,119 @@ ApplicationWindow{
             aboutDialog.raise();
         }
     }
+
+    // Player actions
+    Action {
+        id: openFileAction
+        text: qsTr("Open media")
+        shortcut: "Ctrl+O"
+        onTriggered: {
+            fileDialog.visible = true;
+        }
+    }
+
+    Action {
+        id: pauseMediaAction
+        text: qsTr("Pause media")
+        shortcut: "Ctrl+P"
+        onTriggered: {
+            if (mediaPlayer.playbackState === MediaPlayer.PlayingState) {
+                mediaPlayer.pause()
+            } else if (mediaPlayer.playbackState === MediaPlayer.PausedState){
+                mediaPlayer.play()
+            }
+        }
+    }
+    Action {
+        id: startMediaAction
+        text: qsTr("Start media")
+        shortcut: "Ctrl+K"
+        onTriggered: {
+            mediaPlayer.play();
+        }
+    }
+
+    Action {
+        id: stopMediaAction
+        text: qsTr("Stop media")
+        shortcut: "Ctrl+J"
+        onTriggered: {
+            mediaPlayer.stop();
+            ksession.clearScreen();
+        }
+    }
+    Item {
+        anchors.fill: parent
+        focus: true
+        Keys.onPressed: {
+            switch (event.key) {
+            case Qt.Key_Right:
+                mediaPlayer.fastSeek = event.isAutoRepeat
+                mediaPlayer.seek(mediaPlayer.position + 10000)
+                break
+            case Qt.Key_Left:
+                mediaPlayer.fastSeek = event.isAutoRepeat
+                mediaPlayer.seek(mediaPlayer.position - 10000)
+                break
+            case Qt.Key_Up:
+                mediaPlayer.volume = Math.min(2, mediaPlayer.volume+0.05)
+                break
+            case Qt.Key_Down:
+                mediaPlayer.volume = Math.max(0, mediaPlayer.volume-0.05)
+                break
+            case Qt.Key_Space:
+                if (mediaPlayer.playbackState === MediaPlayer.PlayingState) {
+                    mediaPlayer.pause()
+                } else if (mediaPlayer.playbackState === MediaPlayer.PausedState){
+                    mediaPlayer.play()
+                }
+                break
+            case Qt.Key_Plus:
+                mediaPlayer.playbackRate += 0.1;
+                console.log("mediaPlayer.playbackRate: " + mediaPlayer.playbackRate);
+                break;
+            case Qt.Key_Minus:
+                mediaPlayer.playbackRate = Math.max(0.1, mediaPlayer.playbackRate - 0.1);
+                break;
+            case Qt.Key_F:
+                appSettings.fullscreen = !appSettings.fullscreen
+                break
+            case Qt.Key_L:
+                if (appSettings.audioTrack + 1 < mediaPlayer.internalAudioTracks.length) {
+                    appSettings.audioTrack++;
+                } else {
+                    appSettings.audioTrack = 0;
+                }
+                break
+            case Qt.Key_A:
+                if (appSettings.fillMode === VideoOutput.Stretch) {
+                    appSettings.fillMode = VideoOutput.PreserveAspectFit
+                } else if (appSettings.fillMode === VideoOutput.PreserveAspectFit) {
+                    appSettings.fillMode = VideoOutput.PreserveAspectCrop
+                } else {
+                    appSettings.fillMode = VideoOutput.Stretch
+                }
+                break
+            case Qt.Key_O:
+                fileDialog.open()
+                break;
+            case Qt.Key_N:
+                mediaPlayer.stepForward()
+                break
+            case Qt.Key_B:
+                mediaPlayer.stepBackward()
+                break;
+            //case Qt.Key_Back:
+            case Qt.Key_Q:
+                Qt.quit()
+                break
+            }
+        }
+    }
+    VideoController{
+        id: mediaPlayer
+    }
+
     ApplicationSettings{
         id: appSettings
     }
@@ -148,6 +262,11 @@ ApplicationWindow{
         id: aboutDialog
         visible: false
     }
+    OpenFileDialog{
+        id: fileDialog
+        visible: false
+    }
+
     Loader{
         anchors.centerIn: parent
         active: appSettings.showTerminalSize
