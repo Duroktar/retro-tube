@@ -1,4 +1,4 @@
-# RetroTube  (retro-tube, aka: HDbDamned)  v0.1.0
+# RetroTube  (aka: HDbDamned)  v0.1.0
 
 ![image](https://raw.githubusercontent.com/Duroktar/retro-tube/master/app/qml/images/married.png)
 
