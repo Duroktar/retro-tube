@@ -1,10 +1,10 @@
 /*******************************************************************************
-* Copyright (c) 2013 "Filippo Scognamiglio"
-* https://github.com/Swordfish90/cool-retro-term
+* Copyright (c) 2017 "Scott Doucet"
+* https://github.com/Duroktar/retro-tube
 *
-* This file is part of cool-retro-term.
+* This file is part of retro-tube. Modified from original cool-retro-term source.
 *
-* cool-retro-term is free software: you can redistribute it and/or modify
+* retro-tube is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
@@ -17,22 +17,11 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 *******************************************************************************/
-
-// TODO SOoooooooo... kterminal can get ripped out and replaced with the 
-// video player logic. The key bindings should be put either here alongside
-// the logic, or alternatively put into another file.
-
-// BUGS -
-// - Burn in effect needs to be refreshed properly. There is a 
-//   bad full screen burn leftover when video changes, for example
-// - 
-
 import QtQuick 2.2
 import QtQuick.Controls 1.1
 
 import QMLTermWidget 1.0
 import QtAV 1.6
-
 
 import "utils.js" as Utils
 
@@ -66,19 +55,9 @@ Item{
     property size terminalSize: kterminal.terminalSize
     property size fontMetrics: kterminal.fontMetrics
 
-    // TODO This can go, but use it for template... (see Video events below)
     // 
-    // Manage copy and paste
-    Connections{
-        target: copyAction
-        onTriggered: kterminal.copyClipboard();
-    }
-    Connections{
-        target: pasteAction
-        onTriggered: kterminal.pasteClipboard()
-    }
+    // Video events TODO?
 
-    // Video events
     // Connections{
     //     target: copyAction
     //     onTriggered: kterminal.copyClipboard();
@@ -91,8 +70,8 @@ Item{
     //When settings are updated sources need to be redrawn.
     Connections{
         target: appSettings
-        onFontScalingChanged: terminalContainer.updateSources();
-        onFontWidthChanged: terminalContainer.updateSources();
+        // onFontScalingChanged: terminalContainer.updateSources();
+        // onFontWidthChanged: terminalContainer.updateSources();
         onCurrentMediaChanged: terminalContainer.updateSources();
     }
     Connections{
@@ -100,6 +79,7 @@ Item{
         onWidthChanged: terminalContainer.updateSources();
         onHeightChanged: terminalContainer.updateSources();
     }
+
     function updateSources() {
         kterminal.update();
     }
@@ -123,7 +103,7 @@ Item{
             }
         }
 
-        VideoOutput {
+        VideoOutput2 {
             id: videoOut
             opengl: true
             fillMode: appSettings.fillMode
@@ -140,47 +120,50 @@ Item{
 
         FontLoader{ id: fontLoader }
 
-//        function handleFontChange(fontSource, pixelSize, lineSpacing, screenScaling, fontWidth){
-//            fontLoader.source = fontSource;
+        // function handleFontChange(fontSource, pixelSize, lineSpacing, screenScaling, fontWidth){
+        //     fontLoader.source = fontSource;
 
-//            kterminal.antialiasText = !appSettings.lowResolutionFont;
-//            font.pixelSize = pixelSize;
-//            font.family = fontLoader.name;
+        //     kterminal.antialiasText = !appSettings.lowResolutionFont;
+        //     font.pixelSize = pixelSize;
+        //     font.family = fontLoader.name;
 
-//            terminalContainer.fontWidth = fontWidth;
-//            terminalContainer.screenScaling = screenScaling;
-//            scaleTexture = Math.max(1.0, Math.floor(screenScaling * appSettings.windowScaling));
+        //     terminalContainer.fontWidth = fontWidth;
+        //     terminalContainer.screenScaling = screenScaling;
+        //     scaleTexture = Math.max(1.0, Math.floor(screenScaling * appSettings.windowScaling));
 
-//            kterminal.lineSpacing = lineSpacing;
-//        }
-        function startSession() {
-            appSettings.initializedSettings.disconnect(startSession);
+        //     kterminal.lineSpacing = lineSpacing;
+        // }
 
-            // Retrieve the variable set in main.cpp if arguments are passed.
-            if (defaultCmd) {
-                ksession.setShellProgram(defaultCmd);
-                ksession.setArgs(defaultCmdArgs);
-            } else if (appSettings.useCustomCommand) {
-                var args = Utils.tokenizeCommandLine(appSettings.customCommand);
-                ksession.setShellProgram(args[0]);
-                ksession.setArgs(args.slice(1));
-            } else if (!defaultCmd && Qt.platform.os === "osx") {
-                // OSX Requires the following default parameters for auto login.
-                ksession.setArgs(["-i", "-l"]);
-            }
+        /* Not sure if we'll ever want terminal capabilities back in so here it is */
+        // function startSession() {
+        //     appSettings.initializedSettings.disconnect(startSession);
 
-            if (workdir)
-                ksession.initialWorkingDirectory = workdir;
+        //     // Retrieve the variable set in main.cpp if arguments are passed.
+        //     if (defaultCmd) {
+        //         ksession.setShellProgram(defaultCmd);
+        //         ksession.setArgs(defaultCmdArgs);
+        //     } else if (appSettings.useCustomCommand) {
+        //         var args = Utils.tokenizeCommandLine(appSettings.customCommand);
+        //         ksession.setShellProgram(args[0]);
+        //         ksession.setArgs(args.slice(1));
+        //     } else if (!defaultCmd && Qt.platform.os === "osx") {
+        //         // OSX Requires the following default parameters for auto login.
+        //         ksession.setArgs(["-i", "-l"]);
+        //     }
 
-//            ksession.startShellProgram();
-            forceActiveFocus();
-        }
+        //     if (workdir)
+        //         ksession.initialWorkingDirectory = workdir;
+
+        //     // ksession.startShellProgram();
+        //     forceActiveFocus();
+        // }
+
         Component.onCompleted: {
-            appSettings.terminalFontChanged.connect(handleFontChange);
             appSettings.currentMediaChanged.connect(handleMediaChange);
-//            appSettings.initializedSettings.connect(startSession);
+            // appSettings.initializedSettings.connect(startSession);
         }
     }
+
     Component {
         id: linuxContextMenu
         Menu{
@@ -208,50 +191,51 @@ Item{
     }
     property alias contextmenu: menuLoader.item
 
-    MouseArea{
-        acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.RightButton
-        anchors.fill: parent
-        cursorShape: kterminal.terminalUsesMouse ? Qt.ArrowCursor : Qt.IBeamCursor
-        onWheel:{
-            if(wheel.modifiers & Qt.ControlModifier){
-               wheel.angleDelta.y > 0 ? zoomIn.trigger() : zoomOut.trigger();
-            } else {
-                var coord = correctDistortion(wheel.x, wheel.y);
-                kterminal.simulateWheel(coord.x, coord.y, wheel.buttons, wheel.modifiers, wheel.angleDelta);
-            }
-        }
-        onDoubleClicked: {
-            var coord = correctDistortion(mouse.x, mouse.y);
-            kterminal.simulateMouseDoubleClick(coord.x, coord.y, mouse.button, mouse.buttons, mouse.modifiers);
-        }
-        onPressed: {
-            if((!kterminal.terminalUsesMouse || mouse.modifiers & Qt.ShiftModifier) && mouse.button == Qt.RightButton) {
-                contextmenu.popup();
-            } else {
-                var coord = correctDistortion(mouse.x, mouse.y);
-                kterminal.simulateMousePress(coord.x, coord.y, mouse.button, mouse.buttons, mouse.modifiers)
-            }
-        }
-        onReleased: {
-            var coord = correctDistortion(mouse.x, mouse.y);
-            kterminal.simulateMouseRelease(coord.x, coord.y, mouse.button, mouse.buttons, mouse.modifiers);
-        }
-        onPositionChanged: {
-            var coord = correctDistortion(mouse.x, mouse.y);
-            kterminal.simulateMouseMove(coord.x, coord.y, mouse.button, mouse.buttons, mouse.modifiers);
-        }
+    // MouseArea{
+    //     acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.RightButton
+    //     anchors.fill: parent
+    //     cursorShape: kterminal.terminalUsesMouse ? Qt.ArrowCursor : Qt.IBeamCursor
+    //     onWheel:{
+    //         if(wheel.modifiers & Qt.ControlModifier){
+    //            wheel.angleDelta.y > 0 ? zoomIn.trigger() : zoomOut.trigger();
+    //         } else {
+    //             var coord = correctDistortion(wheel.x, wheel.y);
+    //             kterminal.simulateWheel(coord.x, coord.y, wheel.buttons, wheel.modifiers, wheel.angleDelta);
+    //         }
+    //     }
+    //     onDoubleClicked: {
+    //         var coord = correctDistortion(mouse.x, mouse.y);
+    //         kterminal.simulateMouseDoubleClick(coord.x, coord.y, mouse.button, mouse.buttons, mouse.modifiers);
+    //     }
+    //     onPressed: {
+    //         if((!kterminal.terminalUsesMouse || mouse.modifiers & Qt.ShiftModifier) && mouse.button == Qt.RightButton) {
+    //             contextmenu.popup();
+    //         } else {
+    //             var coord = correctDistortion(mouse.x, mouse.y);
+    //             kterminal.simulateMousePress(coord.x, coord.y, mouse.button, mouse.buttons, mouse.modifiers)
+    //         }
+    //     }
+    //     onReleased: {
+    //         var coord = correctDistortion(mouse.x, mouse.y);
+    //         kterminal.simulateMouseRelease(coord.x, coord.y, mouse.button, mouse.buttons, mouse.modifiers);
+    //     }
+    //     onPositionChanged: {
+    //         var coord = correctDistortion(mouse.x, mouse.y);
+    //         kterminal.simulateMouseMove(coord.x, coord.y, mouse.button, mouse.buttons, mouse.modifiers);
+    //     }
 
-        function correctDistortion(x, y){
-            x = x / width;
-            y = y / height;
+    //     function correctDistortion(x, y){
+    //         x = x / width;
+    //         y = y / height;
 
-            var cc = Qt.size(0.5 - x, 0.5 - y);
-            var distortion = (cc.height * cc.height + cc.width * cc.width) * appSettings.screenCurvature;
+    //         var cc = Qt.size(0.5 - x, 0.5 - y);
+    //         var distortion = (cc.height * cc.height + cc.width * cc.width) * appSettings.screenCurvature;
 
-            return Qt.point((x - cc.width  * (1+distortion) * distortion) * kterminal.width,
-                           (y - cc.height * (1+distortion) * distortion) * kterminal.height)
-        }
-    }
+    //         return Qt.point((x - cc.width  * (1+distortion) * distortion) * kterminal.width,
+    //                        (y - cc.height * (1+distortion) * distortion) * kterminal.height)
+    //     }
+    // }
+
     ShaderEffectSource{
         id: kterminalSource
         sourceItem: kterminal
@@ -311,14 +295,15 @@ Item{
             Connections{
                 target: appSettings
                 onBurnInChanged: _blurredSourceEffect.restartBlurSource();
-                onTerminalFontChanged: _blurredSourceEffect.restartBlurSource();
+                // onTerminalFontChanged: _blurredSourceEffect.restartBlurSource();
                 onRasterizationChanged: _blurredSourceEffect.restartBlurSource();
                 onBurnInQualityChanged: _blurredSourceEffect.restartBlurSource();
+                onCurrentMediaChanged: terminalContainer.updateSources();
             }
-//            Connections {
-//                target: kterminalScrollbar
-//                onOpacityChanged: _blurredSourceEffect.restartBlurSource();
-//            }
+            // Connections {
+            //     target: kterminalScrollbar
+            //     onOpacityChanged: _blurredSourceEffect.restartBlurSource();
+            // }
         }
     }
 

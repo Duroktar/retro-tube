@@ -17,7 +17,7 @@ Window{
         spacing: 15
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
-            text: "cool-retro-term"
+            text: "retro-tube"
             font {bold: true; pointSize: 18}
         }
         Loader{
@@ -78,9 +78,9 @@ Window{
                 anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Text.AlignHCenter
                 text: appSettings.version + "\n" +
-                      qsTr("Author: ") + "Filippo Scognamiglio\n" +
-                      qsTr("Email: ")  + "flscogna@gmail.com\n" +
-                      qsTr("Source: ") + "https://github.com/Swordfish90/cool-retro-term\n"
+                      qsTr("Author: ") + "Scott Doucet\n" +
+                      qsTr("Email: ")  + "duroktar@gmail.com\n" +
+                      qsTr("Source: ") + "https://github.com/Duroktar/retro-term\n"
             }
         }
     }
@@ -89,10 +89,10 @@ Window{
         TextArea{
             anchors.fill: parent
             readOnly: true
-            text: "Copyright (c) 2013 Filippo Scognamiglio <flscogna@gmail.com>\n\n" +
-                  "https://github.com/Swordfish90/cool-retro-term\n\n" +
+            text: "Copyright (c) 2017 Scott Doucet <duroktar@gmail.com>\n\n" +
+                  "https://github.com/Duroktar/retro-term\n\n" +
 
-                  "cool-retro-term is free software: you can redistribute it and/or modify " +
+                  "retro-tube is free software: you can redistribute it and/or modify " +
                   "it under the terms of the GNU General Public License as published by " +
                   "the Free Software Foundation, either version 3 of the License, or " +
                   "(at your option) any later version.\n\n" +

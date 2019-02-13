@@ -53,7 +53,6 @@ int main(int argc, char *argv[])
         // BUG: First line of output is surrounded by double quotes.
         qDebug() << "Usage: " + args.at(0) + " [--default-settings] [--workdir <dir>] [--program <prog>] [-p|--profile <prof>] [--fullscreen] [-h|--help]";
         qDebug() << "  --default-settings  Run retro-tube with the default settings";
-        // qDebug() << "  --workdir <dir>     Change working directory to 'dir'";
         // qDebug() << "  -e <cmd>            Command to execute. This option will catch all following arguments, so use it as the last option.";
         qDebug() << "  --fullscreen        Run retro-tube in fullscreen.";
         qDebug() << "  -p|--profile <prof> Run retro-tube with the given profile.";
