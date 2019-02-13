@@ -1,4 +1,6 @@
-# retro-tube
+# RetroTube  (retro-tube, aka: HDbDamned)  v0.1.0
+
+![image](https://raw.githubusercontent.com/Duroktar/retro-tube/master/app/qml/images/married.png)
 
 ## Description
 retro-tube is a terminal emulator turned video player which mimics the look and feel of the old cathode tube screens.
