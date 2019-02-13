@@ -62,8 +62,10 @@ ApplicationWindow{
         __contentItem.visible: mainMenu.visible
     }
 
+    property string wintitle: appSettings.wintitle
+
     color: "#00000000"
-    title: terminalContainer.title || qsTr("cool-retro-term")
+    title: terminalContainer.title || qsTr(appSettings.wintitle)
 
     Action {
         id: showMenubarAction
@@ -101,12 +103,12 @@ ApplicationWindow{
     Action{
         id: copyAction
         text: qsTr("Copy")
-        shortcut: Qt.platform.os === "osx" ? StandardKey.Copy : "Ctrl+Shift+C"
+        shortcut: "Ctrl+Shift+C"
     }
     Action{
         id: pasteAction
         text: qsTr("Paste")
-        shortcut: Qt.platform.os === "osx" ? StandardKey.Paste : "Ctrl+Shift+V"
+        shortcut: "Ctrl+Shift+V"
     }
     Action{
         id: zoomIn
@@ -135,13 +137,8 @@ ApplicationWindow{
     TerminalContainer{
         id: terminalContainer
         y: appSettings.showMenubar ? 0 : -2 // Workaroud to hide the margin in the menubar.
-        width: parent.width * appSettings.windowScaling
-        height: (parent.height + Math.abs(y)) * appSettings.windowScaling
-
-        transform: Scale {
-            xScale: 1 / appSettings.windowScaling
-            yScale: 1 / appSettings.windowScaling
-        }
+        width: parent.width
+        height: (parent.height + Math.abs(y))
     }
     SettingsWindow{
         id: settingswindow
