@@ -1,70 +1,18 @@
-# cool-retro-term
-
-|> Default Amber|C:\ IBM DOS|$ Default Green|
-|---|---|---|
-|![Default Amber Cool Retro Term](https://user-images.githubusercontent.com/121322/32070717-16708784-ba42-11e7-8572-a8fcc10d7f7d.gif)|![IBM DOS](https://user-images.githubusercontent.com/121322/32070716-16567e5c-ba42-11e7-9e64-ba96dfe9b64d.gif)|![Default Green Cool Retro Term](https://user-images.githubusercontent.com/121322/32070715-163a1c94-ba42-11e7-80bb-41fbf10fc634.gif)|
+# retro-tube
 
 ## Description
-cool-retro-term is a terminal emulator which mimics the look and feel of the old cathode tube screens.
+retro-tube is a terminal emulator turned video player which mimics the look and feel of the old cathode tube screens.
 It has been designed to be eye-candy, customizable, and reasonably lightweight.
 
-It uses the QML port of qtermwidget (Konsole) developed by me: https://github.com/Swordfish90/qmltermwidget .
+It uses the QML port of qtermwidget (Konsole) developed by Swordfish90: https://github.com/Swordfish90/qmltermwidget .
 
 This terminal emulator works under Linux and macOS and requires Qt 5.2 or higher.
 
-## Screenshots
-![Image](<https://i.imgur.com/TNumkDn.png>)
-![Image](<https://i.imgur.com/hfjWOM4.png>)
-![Image](<https://i.imgur.com/GYRDPzJ.jpg>)
-
 ## Install
-Walk the easy way and install cool-retro-term using one of these convenient packages:
-
-Just grab the latest AppImage from the release page and make it executable and run it:
-
-    wget https://github.com/Swordfish90/cool-retro-term/releases/download/1.1.1/Cool-Retro-Term-1.1.1-x86_64.AppImage
-    chmod a+x Cool-Retro-Term-1.1.1-x86_64.AppImage
-    ./Cool-Retro-Term-1.1.1-x86_64.AppImage
-
-**Fedora** has the `cool-retro-term` in the offcial repositories. All you have to do is `sudo dnf install cool-retro-term`.
-
-Users of **openSUSE** can grab a package from [Open Build Service](http://software.opensuse.org/package/cool-retro-term).
-
-**Arch** users can install this [package](https://aur.archlinux.org/packages/cool-retro-term-git/) directly via the [AUR](https://aur.archlinux.org):
-
-    yaourt -S aur/cool-retro-term-git
-
-or use:
-
-    pacman -S cool-retro-term
-
-to install precompiled from community repository.
-
-**Gentoo** users can now install the third release "1.1.0" from a 3rd-party repository preferably via layman:
-
-    USE="git" emerge app-portage/layman
-    wget https://www.gerczei.eu/files/gerczei.xml -O /etc/layman/overlays/gerczei.xml
-    layman -f -a qt -a gerczei # those who've added the repo before 27/08/17 should remove, update and add it again as its source has changed
-    ACCEPT_KEYWORDS="~*" emerge =x11-terms/cool-retro-term-1.1.0::gerczei
-
-The live ebuild (version 9999-r1) tracking the bleeding-edge WIP codebase also remains available.
-
-A word of warning: USE flags and keywords are to be added to portage's configuration files and every emerge operation should be executed with '-p' (short option for --pretend) appended to the command line first as per best practice!
-
-Users of **Ubuntu 14.04 LTS (Trusty) up to 15.10 (Wily)** can use [this PPA](https://launchpad.net/~bugs-launchpad-net-falkensweb).
-
-**Ubuntu 17.10** can use [this PPA](https://launchpad.net/%7Evantuz/+archive/ubuntu/cool-retro-term)
-
-**Solus** users can install using `eopg`:
-```
-eopkg it cool-retro-term
-```
-
-**macOS** users can grab the latest dmg from the release page: https://github.com/Swordfish90/cool-retro-term/releases
 
 ## Build instructions (Linux)
 
-Build cool-retro-term yourself, you know, the retro way.
+Build retro-tube yourself, you know, the retro way.
 
 ## Dependencies
 Make sure to install these first.
@@ -142,16 +90,18 @@ Once you installed all dependencies (Qt is installed and in your path) you need 
 
 ```bash
 # Get it from GitHub
-git clone --recursive https://github.com/Swordfish90/cool-retro-term.git
+git clone --recursive https://github.com/Duroktar/retro-tube.git
 
 # Build it
-cd cool-retro-term
+cd retro-tube
 
 # Compile (Fedora and OpenSUSE user should use qmake-qt5 instead of qmake)
 qmake && make
 
+sudo make install
+
 # Have fun!
-./cool-retro-term
+./retro-tube
 ```
 
 ## Build instructions (macOS)
@@ -163,30 +113,25 @@ qmake && make
 
 ```sh
 brew install qt5
-git clone --recursive https://github.com/Swordfish90/cool-retro-term.git
+git clone --recursive https://github.com/Duroktar/retro-tube.git
 export CPPFLAGS="-I/usr/local/opt/qt5/include"
 export LDFLAGS="-L/usr/local/opt/qt5/lib"
 export PATH=/usr/local/opt/qt5/bin:$PATH
-cd cool-retro-term
+cd retro-tube
 qmake && make
-mkdir cool-retro-term.app/Contents/PlugIns
-cp -r qmltermwidget/QMLTermWidget cool-retro-term.app/Contents/PlugIns
-open cool-retro-term.app
+mkdir retro-tube.app/Contents/PlugIns
+cp -r qmltermwidget/QMLTermWidget retro-tube.app/Contents/PlugIns
+open retro-tube.app
 ```
 
 **MacPorts**
 
 ```sh
 sudo port install qt5
-git clone --recursive https://github.com/Swordfish90/cool-retro-term.git
-cd cool-retro-term
+git clone --recursive https://github.com/Duroktar/retro-tube.git
+cd retro-tube
 /opt/local/libexec/qt5/bin/qmake && make
-mkdir cool-retro-term.app/Contents/PlugIns
-cp -r qmltermwidget/QMLTermWidget cool-retro-term.app/Contents/PlugIns
-open cool-retro-term.app
+mkdir retro-tube.app/Contents/PlugIns
+cp -r qmltermwidget/QMLTermWidget retro-tube.app/Contents/PlugIns
+open retro-tube.app
 ```
-
-## Donations
-I made this project in my spare time because I love what I'm doing. If you are enjoying it and you want to buy me a beer click [here](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=flscogna%40gmail%2ecom&lc=IT&item_name=Filippo%20Scognamiglio&currency_code=EUR&bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted).
-
-You can also add "bounties" on your favourite issues. More information on the [Bountysource](https://www.bountysource.com/teams/crt/issues) page.

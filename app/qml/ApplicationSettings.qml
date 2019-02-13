@@ -1,10 +1,10 @@
 /*******************************************************************************
 * Copyright (c) 2013 "Filippo Scognamiglio"
-* https://github.com/Swordfish90/cool-retro-term
+* https://github.com/Duroktar/retro-tube
 *
-* This file is part of cool-retro-term.
+* This file is part of retro-tube.
 *
-* cool-retro-term is free software: you can redistribute it and/or modify
+* retro-tube is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation, either version 3 of the License, or
 * (at your option) any later version.
@@ -46,7 +46,7 @@ QtObject{
     property bool fullscreen: false
     property bool showMenubar: Qt.platform.os === "osx" ? true : false
 
-    property string wintitle: "cool-retro-term"
+    property string wintitle: "retro-tube"
 
     property bool showTerminalSize: true
     property real windowScaling: 1.0

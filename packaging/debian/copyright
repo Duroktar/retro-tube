@@ -1,10 +1,10 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: cool-retro-term
-Upstream-Contact: Filippo Scognamiglio <flscogna@gmail.com>
+Upstream-Name: retro-tube
+Upstream-Contact: Scott Doucet <duroktar@gmail.com>
 Source: https://github.com/Swordfish90/cool-retro-term
 
 Files: *
-Copyright: 2013-2017 Filippo Scognamiglio
+Copyright: 2019 Scott Doucet
 License: GPL-3
  On Debian systems, the full text of the GNU General Public
  License version 3 can be found in the file

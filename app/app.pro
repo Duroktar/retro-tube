@@ -1,5 +1,5 @@
 QT += qml quick widgets sql
-TARGET = cool-retro-term 
+TARGET = retro-tube 
 
 DESTDIR = $$OUT_PWD/../
 
