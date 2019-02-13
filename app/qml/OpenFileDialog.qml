@@ -19,26 +19,23 @@
 *******************************************************************************/
 
 import QtQuick 2.2
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
+import QtQuick.Dialogs 1.1
+import QtQuick.Window 2.0
 
-import "Components"
 
-RowLayout {
-    property alias value: slider.value
-    property alias stepSize: slider.stepSize
-    property alias minimumValue: slider.minimumValue
-    property alias maximumValue: slider.maximumValue
-    property real maxMultiplier: 100
+FileDialog {
+    id: fileDialog
+    title: "Choose media"
+    folder: shortcuts.home
+    selectFolder: false
+    selectMultiple: false
 
-    id: setting_component
-    spacing: 10
-    Slider{
-        id: slider
-        stepSize: parent.stepSize
-        Layout.fillWidth: true
+    onAccepted: {
+        console.log("You chose: " + fileDialog.fileUrl);
+        appSettings.currentMedia = fileDialog.fileUrl;
     }
-    SizedLabel{
-        text: Math.round(value * maxMultiplier) + "%"
+    onRejected: {
+        console.log("Canceled");
     }
 }
+

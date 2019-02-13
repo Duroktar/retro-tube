@@ -19,26 +19,22 @@
 *******************************************************************************/
 
 import QtQuick 2.2
-import QtQuick.Controls 1.1
-import QtQuick.Layouts 1.1
+import QtAV 1.6
 
-import "Components"
-
-RowLayout {
-    property alias value: slider.value
-    property alias stepSize: slider.stepSize
-    property alias minimumValue: slider.minimumValue
-    property alias maximumValue: slider.maximumValue
-    property real maxMultiplier: 100
-
-    id: setting_component
-    spacing: 10
-    Slider{
-        id: slider
-        stepSize: parent.stepSize
-        Layout.fillWidth: true
-    }
-    SizedLabel{
-        text: Math.round(value * maxMultiplier) + "%"
+MediaPlayer {
+    id: mediaPlayer
+    source: appSettings.currentMedia
+    audioTrack: appSettings.audioTrack
+    onStatusChanged: {
+        if (status == MediaPlayer.Loading)
+            console.log("Loading " + source)
+        else if (status == MediaPlayer.Buffering)
+            console.log("Buffering")
+        else if (status == MediaPlayer.Buffered)
+            console.log("Buffered")
+        else if (status == MediaPlayer.EndOfMedia)
+            console.log("End")
+        else if (status == MediaPlayer.InvalidMedia)
+            console.log("Invalid")
     }
 }

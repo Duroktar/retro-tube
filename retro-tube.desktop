@@ -1,0 +1,11 @@
+[Desktop Entry]
+Comment=Watch television like the good old days
+Exec=retro-tube
+GenericName=CRT Emulator
+Icon=cool-retro-term
+Name=Retro Tube
+Categories=System;Entertainment;
+StartupNotify=true
+Terminal=false
+Type=Application
+Keywords=shell;prompt;command;commandline;

@@ -5,7 +5,7 @@ CONFIG += ordered
 SUBDIRS += qmltermwidget
 SUBDIRS += app
 
-desktop.files += cool-retro-term.desktop
+desktop.files += retro-tube.desktop
 desktop.path += /usr/share/applications
 
 INSTALLS += desktop
